@@ -1,33 +1,50 @@
+'''
+Поиск похожих лиц с помощью Faiss по точному евклидовому расстоянию
+'''
+
 import numpy as np
-d = 128                        # dimension
-nb = 1000000                  # database size
-nq = 1                      # nb of queries
-np.random.seed(1234)             # make reproducible
-xb = np.random.random((nb, d)).astype('float32')
-#xb[:, 0] += np.arange(nb) / 1000.
-#xq = np.random.random((nq, d)).astype('float32')*100
-xq = np.zeros((1,d)).astype('float32')
-xq[0,127]=1
-xq += xb[:1,:]
-#xq[:, 0] += np.arange(nq) / 1000.
+d = 128              
+nb = 100                  
+nq = 1                        
+
+
+f = open('vectors.txt')
+
+xb = np.zeros((nb,d)).astype('float32')
+xb_ans = np.zeros(nb)
+for i in range(nb):
+	X = f.readline().split(',')
+	xb[i,:] = list(map(float,X[1:]))
+	xb_ans[i] = X[0]
+
+xq = np.zeros((nq,d)).astype('float32')
+xq_ans = np.zeros(nq)
+for i in range(nq):
+	#X = f.readline().split(',')
+	xq[i,:] = list(map(float,X[1:]))
+	xq_ans[i] = X[0]
+
 
 print('LEARNING...')
+import faiss             
+index = faiss.IndexFlatL2(d) 
+print(index.is_trained) 
 
-import faiss                   # make faiss available
-index = faiss.IndexFlatL2(d)   # build the index
-print(index.is_trained)      
+print(xb.shape)
 print('ADDING...')
-index.add(xb)           # add vectors to the index
+index.add(xb)     
 print(index.ntotal)
 
 
 print('SEARCHING...')
-k = 10                         # we want to see 4 nearest neighbors
-#D, I = index.search(xb[:1], k)
-D, I = index.search(xq, k)      # actual search
+k = 12                 
+D, I = index.search(xq, k)
 print(I)   
-print(D)                # neighbors of the 5 first queries 
+print(D)
+
 print('VECTORS:')
-print(xq[0,:])
-print(xb[I[0,0],:])
+for i in range(nq):
+	for j in range(k):
+		print(xq_ans[i], ':', xb_ans[I[i,j]], end='   ')
+	print()
 
