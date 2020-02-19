@@ -4,7 +4,7 @@
 
 import numpy as np
 d = 128              
-nb = 100                  
+nb = 100000                
 nq = 1                        
 
 
