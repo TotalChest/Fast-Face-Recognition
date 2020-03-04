@@ -29,13 +29,15 @@ def triplet_loss(y_true, y_pred, alpha = 0.3):
 
 def prepare_database():
 	dst = open('vectors.txt','a')
+	count = 0
 	for dir in glob.glob('n0*'):
-		print(dir)
+		print('\t', dir)
 		for file in glob.glob(dir+'/*'):
 			print(file)
 			dst.write(str(int(dir[1:])))
+			vector = img_to_encoding(file, FRmodel)
 			for j in range(128):
-				dst.write(','+str("{0:.6f}".format(img_to_encoding(file, FRmodel)[0][j])))
+				dst.write(','+str("{0:.10f}".format(vector[0][j])))
 			dst.write('\n')
 	dst.close()
 
