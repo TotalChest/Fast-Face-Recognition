@@ -2,7 +2,7 @@ import numpy as np
 
 vectors_file = 'Vectors/vectors_1.txt'
 d = 128        
-count = 2150
+count = 5000
 q_count = 1
 
 def dist(xq, xb):
@@ -37,10 +37,10 @@ for j in range(q_count):
 	I = np.zeros(count)
 	for i in range(count):
 		I[i] = dist(q_vectors[j], vectors[i])
-	I = np.argsort(I)
+	iI = np.argsort(I)
 	for g in range(k):
-		if vectors_ans[I[g]][:7] == q_ans[j][:7]:
-			print('   ' + vectors_ans[I[g]])
+		if vectors_ans[iI[g]][:7] == q_ans[j][:7]:
+			print('###  '+ vectors_ans[iI[g]] + '\t' + str(I[iI[g]]))
 		else:
-			print(vectors_ans[I[g]])
+			print('     '+ vectors_ans[iI[g]] + '\t' + str(I[iI[g]]))
 	
