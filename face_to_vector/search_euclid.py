@@ -1,4 +1,5 @@
 import numpy as np
+
 d = 128        
 count = 240
 q_count = 10

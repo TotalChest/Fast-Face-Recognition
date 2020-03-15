@@ -1,7 +1,5 @@
-from imutils import paths
 import face_recognition
 import cv2
-import os
 import glob 
 
 
