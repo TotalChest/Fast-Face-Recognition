@@ -16,9 +16,9 @@ for dir in glob.glob(data_dir + '/n0*'):
 		rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
 		boxes = face_recognition.face_locations(rgb, model=method)
-		top, right, bottom, left = boxes[0]
 
 		if boxes:
+			top, right, bottom, left = boxes[0]
 			face_image = image[top:bottom, left:right]
 			cv2.imshow("", face_image[:,:])
 			cv2.waitKey(100)

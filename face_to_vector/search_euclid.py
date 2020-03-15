@@ -1,7 +1,8 @@
 import numpy as np
 
+vectors_file = 'Vectors/vectors_1.txt'
 d = 128        
-count = 3264
+count = 2150
 q_count = 1
 
 def dist(xq, xb):
@@ -11,8 +12,7 @@ def dist(xq, xb):
 	return c
 
 
-f = open('vectors_128.txt')
-
+f = open(vectors_file)
 
 vectors = np.zeros((count, d))
 vectors_ans = []
@@ -30,13 +30,17 @@ for i in range(q_count):
 
 
 print('SEARCHING...')
-k = 60
+k = 50
 for j in range(q_count):
-	print('\n', q_ans[j])
+	print('\n\n')
+	print(q_ans[j])
 	I = np.zeros(count)
 	for i in range(count):
 		I[i] = dist(q_vectors[j], vectors[i])
 	I = np.argsort(I)
 	for g in range(k):
-		print(vectors_ans[I[g]])
-	print()
+		if vectors_ans[I[g]][:7] == q_ans[j][:7]:
+			print('   ' + vectors_ans[I[g]])
+		else:
+			print(vectors_ans[I[g]])
+	
