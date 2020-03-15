@@ -1,6 +1,7 @@
 import face_recognition
 import cv2
-import glob 
+import glob
+import os
 
 
 vectors_file = 'Vectors/vectors_'
@@ -16,6 +17,10 @@ k = 0
 
 for dir in glob.glob(data_dir + '/n0*'):
 	for file in glob.glob(dir+'/*'):
+
+		if os.path.getsize(file) > 120000:
+			print('  --LARGE--  ')
+			continue
 
 		if k == 5000:
 			dst.close()
@@ -44,7 +49,8 @@ for dir in glob.glob(data_dir + '/n0*'):
 			print('  --NO FACE--  ')
 			k -= 1
 
-	added.write(dir.split('/')[1] + '\n')
+	added.write(dir.split('/')[1])
+	added.write('\n')
 
 dst.close()
 added.close()
