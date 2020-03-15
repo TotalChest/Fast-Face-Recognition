@@ -1,7 +1,7 @@
 import numpy as np
 d = 128        
-count = 240
-q_count = 10
+count = 3264
+q_count = 1
 
 def dist(xq, xb):
 	c = 0
