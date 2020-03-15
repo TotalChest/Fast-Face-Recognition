@@ -30,7 +30,7 @@ for i in range(q_count):
 
 
 print('SEARCHING...')
-k = 40
+k = 60
 for j in range(q_count):
 	print('\n', q_ans[j])
 	I = np.zeros(count)
