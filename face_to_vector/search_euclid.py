@@ -1,8 +1,8 @@
 import numpy as np
 
-vectors_file = 'Vectors/vectors_1.txt'
+vectors_file = 'Vectors/Vectors.txt'
 d = 128        
-count = 5000
+count = 37750
 q_count = 1
 
 def dist(xq, xb):
