@@ -12,7 +12,7 @@ const string vectors_file("Vectors/Vectors.txt");
 const string delimiter(",");
 const int d = 128;
 const int q = 10;
-const int k_nearest = 40;
+const int k_nearest = 100;
 
 double dist(vector<double> &a, vector<double> &b)
 {
@@ -82,6 +82,8 @@ int main()
 
    		cout << "Searching time: " << ((end - start) / (double)CLOCKS_PER_SEC) << " seconds in " << count << " faces.\n" << endl;
     }
+    
+  	
 
   	file.close();
 
