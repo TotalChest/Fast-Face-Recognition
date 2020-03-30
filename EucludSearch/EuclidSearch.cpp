@@ -8,11 +8,11 @@
 
 using namespace std;
 
-const string vectors_file("Vectors/Vectors.txt");
+const string vectors_file("../Vectors/Vectors.txt");
 const string delimiter(",");
-const int d = 128;
-const int q = 10;
-const int k_nearest = 100;
+const int d = 128; //Размерность
+const int q = 10; // Количество запросов
+const int k_nearest = 100; // Количество ближайших соседей
 
 double dist(vector<double> &a, vector<double> &b)
 {
@@ -53,9 +53,8 @@ int main()
     	queries[i] = vectors[index];
     }
 
-
-    cout << "START SEARCHING\n";
-
+    cout << "START SEARCHING...\n";
+    
     for(int i = 0; i < q; ++i)
   	{
     	vector< pair<double, int> > v_dist(count);
