@@ -14,15 +14,23 @@ const string delimiter(",");
 const int d = 128; //Размерность
 const int q = 10; // Количество запросов
 const int k_nearest = 100; // Количество ближайших соседей
-const int K = 400; // Количество центроидов
-const int num_clasters = 3; // Количество соседних кластеров для поиска
+const int K = 50; // Количество центроидов для каждого измерения
+const int num_clasters = 20; // Количество соседних кластеров для поиска
 const int threads = 8;
 
-double dist(vector<double> &a, vector<double> &b)
+double dist_1(vector<double> &a, vector<double> &b)
 {
 	double dist = 0.0;
-	for(int i = 0; i < d; ++i)
+	for(int i = 0; i < d/2; ++i)
 		dist += (a[i] - b[i]) * (a[i] - b[i]);
+	return dist;
+}
+
+double dist_2(vector<double> &a, vector<double> &b)
+{
+	double dist = 0.0;
+	for(int i = 0; i < d/2; ++i)
+		dist += (a[i+d/2] - b[i]) * (a[i+d/2] - b[i]);
 	return dist;
 }
 
@@ -60,14 +68,26 @@ int main()
 
     cout << "START LEARNING...\n";
 
-    vector< vector<double> > centroids(K); // Вектор центроидов
-    vector<int> member(count, 0); // Вектор меток
+    vector< vector<double> > centroids_1(K); // Вектор центроидов первого измерения
+    vector< vector<double> > centroids_2(K); // Вектор центроидов второго измерения
+    vector<int> member_1(count, 0); // Вектор меток первого измерения
+    vector<int> member_2(count, 0); // Вектор меток второго измерения
 
     for(int i = 0; i < K; ++i)
     {
         int index = rand() % count;
-        centroids[i] = vectors[index].second;
+        for(int j = 0; j < d/2; ++j)
+        	centroids_1[i].push_back(vectors[index].second[j]);
     }
+
+    for(int i = 0; i < K; ++i)
+    {
+        int index = rand() % count;
+        for(int j = 64; j < d; ++j)
+        	centroids_2[i].push_back(vectors[index].second[j]);
+    }
+
+    cout << "FIRST CLUSTER...\n";
 
     for(int t = 0; t < 20; ++t)
     {    
@@ -75,11 +95,11 @@ int main()
         #pragma omp parallel for
         for(int i = 0; i < count; ++i)
         {
-            double min = dist(vectors[i].second, centroids[0]);
+            double min = dist_1(vectors[i].second, centroids_1[0]);
             int cl = 0;
             for(int j = 1; j < K; ++j)
             {
-                double distance = dist(vectors[i].second, centroids[j]);
+                double distance = dist_1(vectors[i].second, centroids_1[j]);
                 if(distance < min)
                 {
                     min = distance;
@@ -87,7 +107,7 @@ int main()
                 }
             }
 
-            member[i] = cl;
+            member_1[i] = cl;
 
         }
 
@@ -95,23 +115,66 @@ int main()
         for(int j = 0; j < K; ++j)
         {
             int num = 0;
-            vector<double> temp(d,0);
+            vector<double> temp(d/2,0);
             for(int i = 0; i < count; ++i)
-                if(member[i] == j)
+                if(member_1[i] == j)
                 {
                     ++num;
-                    for(int g = 0; g < d; ++g)
+                    for(int g = 0; g < d/2; ++g)
                         temp[g] = temp[g] + vectors[i].second[g];
                 }
-            for(int i = 0; i < d; ++i)
+            for(int i = 0; i < d/2; ++i)
                 temp[i] /= num;
-            centroids[j] = temp;
+            centroids_1[j] = temp;
         }
     }
     cout << "\r" << "20/20" << endl;
 
-    cout << "START BUILD INDEX...\n";
+    cout << "SECOND CLUSTER...\n";
 
+    for(int t = 0; t < 20; ++t)
+    {    
+        cout << "\r" << t << "/20" << flush;
+        #pragma omp parallel for
+        for(int i = 0; i < count; ++i)
+        {
+            double min = dist_2(vectors[i].second, centroids_2[0]);
+            int cl = 0;
+            for(int j = 1; j < K; ++j)
+            {
+                double distance = dist_2(vectors[i].second, centroids_2[j]);
+                if(distance < min)
+                {
+                    min = distance;
+                    cl = j;
+                }
+            }
+
+            member_2[i] = cl;
+
+        }
+
+        #pragma omp parallel for
+        for(int j = 0; j < K; ++j)
+        {
+            int num = 0;
+            vector<double> temp(d/2,0);
+            for(int i = 0; i < count; ++i)
+                if(member_2[i] == j)
+                {
+                    ++num;
+                    for(int g = 0; g < d/2; ++g)
+                        temp[g] = temp[g] + vectors[i].second[g+d/2];
+                }
+            for(int i = 0; i < d/2; ++i)
+                temp[i] /= num;
+            centroids_2[j] = temp;
+        }
+    }
+    cout << "\r" << "20/20" << endl;
+
+    cout << "START BUILD MULTIINDEX...\n";
+/*
     vector< vector < pair< string, vector<double> > > > InvertedIndex(K);
     for(int i = 0; i < count; ++i)
     {
@@ -168,7 +231,7 @@ int main()
    		cout << "Searching time: " << ((end - start) / (double)CLOCKS_PER_SEC) << " seconds in " << count << " faces.\n" << endl;
     }
     
-
+*/
   	file.close();
 
 	return 0;
