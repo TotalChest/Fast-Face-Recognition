@@ -1,8 +1,10 @@
 # Fast-Face-Recognition
 
-### Term paper on the study of methods for quick image search in large volumes of data on faces datasets
+### Курсовая работа: применение методов быстрого поиска изображений для задачи распознавания лиц 
 
 **Vectors** - Постороенные векторы признаков лиц с помошью нейросети (500 классов, 150000+ векторов) 
+
+**FaceToVector** - Скрипты построения признаков лиц
 
 **EuclidSearch** - Поиск людей по точному евклидову расстоянию  
 
