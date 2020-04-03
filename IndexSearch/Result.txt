@@ -1,0 +1,3 @@
+Queries: 1000
+Accuracy: 0.84168
+Time: 0.00662016

@@ -1,5 +1,7 @@
+# IndexSearch
+
 ### Запуск:
 ```bash
-$ g++ IndexSearch -o IndexSearch -fopenmp
+$ g++ IndexSearch.cpp -o IndexSearch -fopenmp
 $ ./IndexSearch
 ```

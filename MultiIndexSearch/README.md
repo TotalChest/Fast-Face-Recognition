@@ -1,5 +1,7 @@
+# MultiIndexSearch
+
 ### Запуск:
 ```bash
-$ g++ MultiIndexSearch -o MultiIndexSearch -fopenmp
+$ g++ MultiIndexSearch.cpp -o MultiIndexSearch -fopenmp
 $ ./MultiIndexSearch
 ```

@@ -9,10 +9,11 @@
 using namespace std;
 
 const string vectors_file("../Vectors/Vectors.txt");
+const string result_file("Result.txt");
 const string delimiter(",");
 const int d = 128; //Размерность
-const int q = 10; // Количество запросов
-const int k_nearest = 100; // Количество ближайших соседей
+const int q = 1000; // Количество запросов
+const int k_nearest = 50; // Количество ближайших соседей
 
 double dist(vector<double> &a, vector<double> &b)
 {
@@ -54,7 +55,11 @@ int main()
     }
 
     cout << "START SEARCHING...\n";
-    
+    ofstream res_file(result_file);
+    res_file << "Queries: " << q << "\n";
+    int total_true = 0;
+    double total_time = 0;
+
     for(int i = 0; i < q; ++i)
   	{
     	vector< pair<double, int> > v_dist(count);
@@ -70,20 +75,27 @@ int main()
 
     	cout << "Query: " << queries[i].first << endl;
 
+        int count_true = 0;
     	for(int k = 0; k < k_nearest; ++k)
     	{
     		string temp = vectors[v_dist[k].second].first;
     		if(temp.substr(0, 8) == queries[i].first.substr(0, 8))
+            {
+                count_true++;
     		    cout << "###  " << temp << "   " << v_dist[k].first << endl;
+            }
     		else
     			cout << "     " << temp << "   " << v_dist[k].first << endl;
     	}
 
+        total_true += count_true;
+        total_time += ((end - start) / (double)CLOCKS_PER_SEC);
    		cout << "Searching time: " << ((end - start) / (double)CLOCKS_PER_SEC) << " seconds in " << count << " faces.\n" << endl;
     }
     
-  	
-
+    res_file << "Accuracy: " << 1.0*total_true/(q*k_nearest) << "\n";
+    res_file << "Time: " << total_time/q << "\n";
+  	res_file.close();
   	file.close();
 
 	return 0;
