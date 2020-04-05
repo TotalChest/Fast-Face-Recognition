@@ -1,3 +1,4 @@
+EuclidSearch
 Queries: 1000
-Accuracy: 0.84908
-Time: 0.31819
+Accuracy: 0.8511
+Time: 0.332204

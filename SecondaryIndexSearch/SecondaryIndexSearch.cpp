@@ -136,7 +136,7 @@ int main()
 
     cout << "START SEARCHING...\n";
     ofstream res_file(result_file);
-    res_file << "IndexSearch\nQueries: " << q << "\n";
+    res_file << "SecondarySearch\nQueries: " << q << "\n";
     int total_true = 0;
     double total_time = 0;
 
@@ -162,7 +162,7 @@ int main()
     	cout << "Query: " << queries[i].first << endl;
 
         int count_true = 0;
-    	for(int k = 1; k <= k_nearest; ++k)
+    	for(int k = 0; k < k_nearest; ++k)
     	{
     		string temp = v_dist[k].second;
     		if(temp.substr(0, 8) == queries[i].first.substr(0, 8))

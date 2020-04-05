@@ -56,7 +56,7 @@ int main()
 
     cout << "START SEARCHING...\n";
     ofstream res_file(result_file);
-    res_file << "Queries: " << q << "\n";
+    res_file << "EuclidSearch\nQueries: " << q << "\n";
     int total_true = 0;
     double total_time = 0;
 
@@ -76,7 +76,7 @@ int main()
     	cout << "Query: " << queries[i].first << endl;
 
         int count_true = 0;
-    	for(int k = 0; k < k_nearest; ++k)
+    	for(int k = 1; k <= k_nearest; ++k)
     	{
     		string temp = vectors[v_dist[k].second].first;
     		if(temp.substr(0, 8) == queries[i].first.substr(0, 8))

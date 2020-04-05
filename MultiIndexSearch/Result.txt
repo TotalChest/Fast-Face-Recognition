@@ -1,3 +1,4 @@
+MultiIndexSearch
 Queries: 1000
-Accuracy: 0.70098
-Time: 0.0031471
+Accuracy: 0.69642
+Time: 0.00376184
