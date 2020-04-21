@@ -207,7 +207,7 @@ int main()
 
     cout << "START SEARCHING...\n";
     ofstream res_file(result_file);
-    res_file << "SecondarySearch\nQueries: " << q << "\n";
+    res_file << "HierarchicalSearch\nQueries: " << q << "\n";
     int total_true = 0;
     double total_time = 0;
 
