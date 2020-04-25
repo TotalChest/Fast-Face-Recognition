@@ -1,4 +1,0 @@
-IndexSearch
-Queries: 1000
-Accuracy: 0.82908
-Time: 0.00808713

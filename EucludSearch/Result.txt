@@ -1,4 +1,0 @@
-EuclidSearch
-Queries: 1000
-Accuracy: 0.8511
-Time: 0.332204

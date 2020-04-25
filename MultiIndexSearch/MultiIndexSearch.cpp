@@ -6,17 +6,18 @@
 #include <sstream>
 #include <algorithm>
 #include <omp.h>
+#include <map>
 
 using namespace std;
 
 const string vectors_file("../Vectors/Vectors.txt");
-const string result_file("Result.txt");
+const string result_file("Results/Result_");
 const string delimiter(",");
 const int d = 128; //Размерность
 const int q = 1000; // Количество запросов
-const int k_nearest = 50; // Количество ближайших соседей
+int k_nearest = 50; // Количество ближайших соседей
 const int K = 50; // Количество центроидов для каждого измерения
-const int secondary_serach = 800; // Объем вторичного поиска
+const int secondary_serach = 15; // Коэффициент объема вторичного поиска
 const int threads = 8;
 
 double dist(vector<double> &a, vector<double> &b)
@@ -105,8 +106,15 @@ private:
     int maxsize;
 };
 
-int main()
+int main(int argc, char **argv)
 {
+    if (argc > 2)
+    {
+        cout << "Usage: ./MultiIndexSearch <k_nearest>\n";
+        return 0;
+    }
+    if (argc == 2)
+        k_nearest = atoi(argv[1]);
     omp_set_num_threads(threads);
 	ifstream file(vectors_file);
 	string str;
@@ -276,9 +284,10 @@ int main()
     vectors.clear();
 
     cout << "START SEARCHING...\n";
-    ofstream res_file(result_file);
-    res_file << "MultiIndexSearch\nQueries: " << q << "\n";
+    ofstream res_file(result_file + to_string(k_nearest));
+    res_file << "MultiIndexSearch k = " << k_nearest << "\nQueries: " << q << "\n";
     int total_true = 0;
+    int face_true = 0;
     double total_time = 0;
 
     for(int i = 0; i < q; ++i)
@@ -302,7 +311,7 @@ int main()
         int total_count = 0;
         int iter_num = 0;
         int pq_size = 0;
-        while(total_count < secondary_serach)
+        while(total_count < secondary_serach * k_nearest)
         {
         	if(pq_size == 0)
         	{
@@ -325,9 +334,13 @@ int main()
     	cout << "Query: " << queries[i].first << endl;
 
     	int count_true = 0;
+        map<string, int> freq;
     	for(int k = 1; k <= k_nearest; ++k)
     	{
     		string temp = v_dist[k].second;
+            if (freq.find(temp.substr(0, 8)) == freq.end())
+                freq[temp.substr(0, 8)] = 0;
+            freq[temp.substr(0, 8)] +=1;
     		if(temp.substr(0, 8) == queries[i].first.substr(0, 8))
     		{
     			count_true++;
@@ -337,12 +350,23 @@ int main()
     			cout << "     " << temp << "   " << v_dist[k].first << endl;
     	}
 
+        int max_freq = 0;
+        string face;
+        for (auto elem: freq)
+            if(elem.second > max_freq) {
+                max_freq = elem.second;
+                face = elem.first;
+            }
+        if (face == queries[i].first.substr(0, 8))
+            face_true++;
+
     	total_true += count_true;
         total_time += ((end - start) / (double)CLOCKS_PER_SEC);
    		cout << "Searching time: " << ((end - start) / (double)CLOCKS_PER_SEC) << " seconds in " << count << " faces.\n" << endl;
     }
 
-    res_file << "Accuracy: " << 1.0*total_true/(q*k_nearest) << "\n";
+    res_file << "Search accuracy: " << 1.0*total_true/(q*k_nearest) << "\n";
+    res_file << "Recognition accuracy: " << 1.0*face_true/q << "\n";
     res_file << "Time: " << total_time/q << "\n";
     res_file.close();
     file.close();

@@ -3,5 +3,10 @@
 ### Запуск:
 ```bash
 $ g++ IndexSearch.cpp -o IndexSearch -fopenmp
-$ ./IndexSearch
+$ ./IndexSearch <k_nearest>
+```
+
+### Эксперименты:
+```bash
+$ sh Experiments.sh
 ```

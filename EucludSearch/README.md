@@ -3,5 +3,10 @@
 ### Запуск:
 ```bash
 $ g++ EuclidSearch.cpp -o EuclicSearch
-$ ./EuclidSearch
+$ ./EuclidSearch <k_nearest>
+```
+
+### Эксперименты:
+```bash
+$ sh Experiments.sh
 ```

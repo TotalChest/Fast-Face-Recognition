@@ -3,5 +3,10 @@
 ### Запуск:
 ```bash
 $ g++ HierarchicalIndexSearch.cpp -o HierarchicalIndexSearch -fopenmp
-$ ./HierarchicalIndexSearch
+$ ./HierarchicalIndexSearch <k_nearest>
+```
+
+### Эксперименты:
+```bash
+$ sh Experiments.sh
 ```

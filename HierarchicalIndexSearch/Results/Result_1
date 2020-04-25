@@ -1,0 +1,5 @@
+HierarchicalSearch k = 1
+Queries: 1000
+Search accuracy: 0.884
+Recognition accuracy: 0.884
+Time: 0.00176421

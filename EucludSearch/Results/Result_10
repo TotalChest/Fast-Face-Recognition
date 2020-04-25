@@ -1,0 +1,5 @@
+EuclidSearch k = 10
+Queries: 1000
+Search accuracy: 0.849
+Recognition accuracy: 0.892
+Time: 0.36499
