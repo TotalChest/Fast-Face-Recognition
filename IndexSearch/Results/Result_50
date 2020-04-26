@@ -1,0 +1,5 @@
+IndexSearch k = 50
+Queries: 1000
+Search accuracy: 0.82122
+Recognition accuracy: 0.881
+Time: 0.00863807

@@ -1,0 +1,5 @@
+MultiIndexSearch k = 10
+Queries: 1000
+Search accuracy: 0.7731
+Recognition accuracy: 0.82
+Time: 0.00211208
