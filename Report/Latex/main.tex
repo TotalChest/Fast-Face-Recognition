@@ -1,0 +1,78 @@
+\documentclass[oneside,senior,etd]{BYUPhysForDegree}
+
+\usepackage[utf8]{inputenc}
+\usepackage{rotating} 
+
+\usepackage[russian]{babel}
+\usepackage{amsfonts}
+\usepackage{amstext}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{color}
+\usepackage[unicode]{hyperref}
+\usepackage[nottoc]{tocbibind}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{verbatim}
+\usepackage{listings}
+
+\usepackage{commath}
+\newcommand\Tau{\mathcal{T}}
+\newcommand{\R}{\mathbb{R}}
+\usepackage{color}
+\usepackage[colorinlistoftodos, prependcaption]{todonotes}
+\usepackage{multirow}
+\newcommand*{\MyIndent}{\hspace*{0.2cm}}
+
+\Chair{Кафедра Системного Программирования}
+\Lab{~}
+\Year{2020}
+  \Month{Май}
+  \City{Москва}
+  \AuthorText{Автор}
+  \Author{Фомин Сергей Александрович}
+  \AuthorEng{}
+  \AcadGroup{328}
+  \TitleTop{Исследование методов быстрого поиска изображений}
+  \TitleBottom{ в задаче распознавания лиц}
+  \TitleTopEng{Research methods for fast image search}
+  \TitleBottomEng{in the face recognition problem} 
+  \docname{Курсовая работа}
+  \Advisor{Архипенко Константин Владимирович}
+  \Consultant{Рындин Максим Алексеевич}
+  
+\Abstract{Одной из востребованных областей поиска с Интернете является поиск по изображениям. Современные методы индексации данных показывают отличный результат поиска в многомиллиардных коллекциях и повсеместно применяются для данной задачи. В этой работе предлагается изучить существующие подходы индексации большого количества изображений и посмотреть на поведение этих алгоритмов в задаче распознавания лиц. Будем считать, что современные нейросетевые алгоритмы достаточно хорошо выделяют признаки лица на изображении, и лишь немного затронем этот вопрос. Основной задачей ставим сравнение скорости поиска индексных методов на наборах данных лиц. Начнем рассмотрение с простейших алгоритмов поиска, таких как поиск по точному расстоянию и простая индексная структура. Затем на более продвинутых алгоритмах увеличим скорость поиска и исследуем ухудшение точности. Эксперименты показывают, что в больших коллекция изображений лиц можно добиться приемлемой скорости поиска с хороших показателем точности. Сильное же ускорение приводит к большим потерям.}
+\AbstractEng{Abstract}
+
+
+\University{Московский государственный университет имени М.В.Ломоносова}
+\Faculty{Факультет вычислительной математики и кибернетики}
+\GrText{гр.}
+\AdvisorText{Научный руководитель}
+\ConsultantText{Научный консультант}
+\AbstractText{Аннотация}
+
+\begin{document}
+\fixmargins
+
+\makepreliminarypages
+
+\oneandhalfspace
+
+\tableofcontents
+
+\include{Chapter0} % Введение
+\include{Chapter1} % Постановка задачи
+\include{Chapter2} % Обзор существующих решений
+\include{Chapter3} % Исследование и построение решения задачи
+\include{Chapter4} % Описание Экспериментальной части
+\include{Chapter5} % Заключение
+
+\nocite{*}
+\bibliographystyle{gost71u}
+\bibliography{references}
+
+
+\end{document}
